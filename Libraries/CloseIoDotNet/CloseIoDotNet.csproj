@@ -49,9 +49,12 @@
     <Compile Include="Entities\Definitions\Contacts\Emails\Email.cs" />
     <Compile Include="Entities\Definitions\Contacts\Phones\Phone.cs" />
     <Compile Include="Entities\Definitions\Contacts\Urls\Url.cs" />
+    <Compile Include="Entities\Definitions\IEntity.cs" />
     <Compile Include="Entities\Definitions\Lead.cs" />
     <Compile Include="Entities\Definitions\Opportunities\Opportunity.cs" />
     <Compile Include="Entities\Definitions\Tasks\Task.cs" />
+    <Compile Include="Entities\Fields\AEntityField.cs" />
+    <Compile Include="Entities\Fields\IEntityField.cs" />
     <Compile Include="ICloseIoDotNetContext.cs" />
     <Compile Include="Ioc\Factory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

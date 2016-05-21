@@ -2,7 +2,7 @@
 {
     using Newtonsoft.Json;
 
-    public class Url
+    public class Url : IEntity
     {
         #region Properties
         [JsonProperty(PropertyName = "url", DefaultValueHandling = DefaultValueHandling.Ignore)]

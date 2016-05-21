@@ -7,7 +7,7 @@
     using Phones;
     using Urls;
 
-    public class Contact
+    public class Contact : IEntity
     {
         #region Instance Variables
         private IEnumerable<Email> _emails;

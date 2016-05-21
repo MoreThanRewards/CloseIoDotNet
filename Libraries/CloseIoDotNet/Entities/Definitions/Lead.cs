@@ -8,7 +8,7 @@
     using Opportunities;
     using Tasks;
 
-    public class Lead
+    public class Lead : IEntity
     {
         #region Instance Variables
         private IEnumerable<Address> _addresses;

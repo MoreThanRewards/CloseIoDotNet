@@ -2,7 +2,7 @@
 {
     using Newtonsoft.Json;
 
-    public class Phone
+    public class Phone : IEntity
     {
         #region Properties
         [PhoneFieldProperty(PhoneField.PhoneNumber, "phone", true, true)]

@@ -3,7 +3,7 @@
     using System;
     using Newtonsoft.Json;
 
-    public class Task
+    public class Task : IEntity
     {
         #region Properties
         [JsonProperty(PropertyName = "id", DefaultValueHandling = DefaultValueHandling.Ignore)]

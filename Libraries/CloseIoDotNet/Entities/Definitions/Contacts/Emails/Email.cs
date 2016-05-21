@@ -2,7 +2,7 @@
 {
     using Newtonsoft.Json;
 
-    public class Email
+    public class Email : IEntity
     {
         #region Properties
         [JsonProperty(PropertyName = "email", DefaultValueHandling = DefaultValueHandling.Ignore)]

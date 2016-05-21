@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using Newtonsoft.Json;
 
-    public class Opportunity
+    public class Opportunity : IEntity
     {
         #region Instance Variables
         private IEnumerable<dynamic> _integrationLinks;
