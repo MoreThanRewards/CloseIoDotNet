@@ -52,6 +52,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Entities\Definitions\LeadTest.cs" />
     <Compile Include="Entities\Fields\BaseEntityFieldTest.cs" />
     <Compile Include="Entities\Fields\LeadEntityFieldAttributeTest.cs" />
     <Compile Include="Ioc\FactoryTest.cs" />

@@ -22,7 +22,8 @@
             var result = new List<IEntityField<T>>();
 
             var properties = typeof (T).GetProperties()
-                .SelectMany(property => property.GetCustomAttributes(typeof (IEntityField<T>)))
+                .SelectMany(property => property.GetCustomAttributes(true))
+                .Where(attribute => attribute.GetType().GetInterfaces().Contains(typeof(IEntityField<T>)))
                 .ToList();
 
             properties.ForEach(

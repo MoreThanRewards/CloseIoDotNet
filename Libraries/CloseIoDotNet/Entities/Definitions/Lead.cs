@@ -9,7 +9,7 @@
     using Opportunities;
     using Tasks;
 
-    public class Lead : IEntity
+    public class Lead : AEntity<Lead>
     {
         #region Instance Variables
         private IEnumerable<Address> _addresses;
