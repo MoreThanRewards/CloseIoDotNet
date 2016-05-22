@@ -34,6 +34,10 @@
       <HintPath>..\..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\RestSharp.105.2.3\lib\net45\RestSharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -67,9 +71,15 @@
     <Compile Include="ICloseIoDotNetContext.cs" />
     <Compile Include="Ioc\Factory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rest\ClientFactories\IRestClientFactory.cs" />
+    <Compile Include="Rest\ClientFactories\RestClientFactory.cs" />
     <Compile Include="Rest\MetaEntities\EnumerableResponse.cs" />
     <Compile Include="Rest\MetaEntities\ErrorResponse.cs" />
     <Compile Include="Rest\MetaEntities\StatusResponse.cs" />
+    <Compile Include="Rest\RequestFactories\IRestRequestFactory.cs" />
+    <Compile Include="Rest\RequestFactories\RestRequestFactory.cs" />
+    <Compile Include="Rest\Serialization\NewtonsoftDeserializer.cs" />
+    <Compile Include="Rest\Serialization\NewtonsoftSerializer.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
