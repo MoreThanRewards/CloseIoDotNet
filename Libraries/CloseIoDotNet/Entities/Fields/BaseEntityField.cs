@@ -1,17 +1,15 @@
-﻿using System;
-
-namespace CloseIoDotNet.Entities.Fields
+﻿namespace CloseIoDotNet.Entities.Fields
 {
+    using System;
     using Definitions;
 
-    public abstract class AEntityField<T> : IEntityField<T> where T : IEntity
+    public class BaseEntityField<T> : IEntityField<T> where T : IEntity
     {
         #region Constants
         private const string InvalidOperationMessageFormat = "{0} not initialized";
         #endregion
 
         #region Instance Variables
-        private Type _belongsTo;
         private string _name;
         private string _serializedName;
         private bool? _isRequiredOnCreate;
@@ -22,25 +20,7 @@ namespace CloseIoDotNet.Entities.Fields
         #endregion
 
         #region Properties - Interface
-        public Type BelongsTo
-        {
-            get
-            {
-                if (_belongsTo == null)
-                {
-                    throw new InvalidOperationException(GenerateInvalidOperationExceptionMessage("BelongsTo"));
-                }
-                return _belongsTo;
-            }
-            protected set
-            {
-                if (value?.IsSubclassOf(typeof (IEntity)) == false)
-                {
-                    throw new ArgumentException("BelongsTo must be a type that implements IEntity.");
-                }
-                _belongsTo = value;
-            }
-        }
+        public Type BelongsTo => typeof(T);
 
         public string Name
         {
@@ -52,7 +32,7 @@ namespace CloseIoDotNet.Entities.Fields
                 }
                 return _name;
             }
-            protected set { _name = value; }
+            set { _name = value; }
         }
 
         public string SerializedName
@@ -65,7 +45,7 @@ namespace CloseIoDotNet.Entities.Fields
                 }
                 return _serializedName;
             }
-            protected set { _serializedName = value; }
+            set { _serializedName = value; }
         }
 
         public bool IsRequiredOnCreate
@@ -78,7 +58,7 @@ namespace CloseIoDotNet.Entities.Fields
                 }
                 return _isRequiredOnCreate.Value;
             }
-            protected set { _isRequiredOnCreate = value; }
+            set { _isRequiredOnCreate = value; }
         }
 
         public bool IsAllowedOnCreate
@@ -91,7 +71,7 @@ namespace CloseIoDotNet.Entities.Fields
                 }
                 return _isAllowedOnCreate.Value;
             }
-            protected set { _isAllowedOnCreate = value; }
+            set { _isAllowedOnCreate = value; }
         }
 
         public bool IsRequiredOnUpdate
@@ -104,7 +84,7 @@ namespace CloseIoDotNet.Entities.Fields
                 }
                 return _isRequiredOnUpdate.Value;
             }
-            protected set { _isRequiredOnUpdate = value; }
+            set { _isRequiredOnUpdate = value; }
         }
 
         public bool IsAllowedOnUpdate
@@ -118,7 +98,7 @@ namespace CloseIoDotNet.Entities.Fields
 
                 return _isAllowedOnUpdate.Value;
             }
-            protected set { _isAllowedOnUpdate = value; }
+            set { _isAllowedOnUpdate = value; }
         }
 
         public bool IsRequiredOnDelete
@@ -131,14 +111,18 @@ namespace CloseIoDotNet.Entities.Fields
                 }
                 return _isRequiredOnDelete.Value;
             }
-            protected set { _isRequiredOnDelete = value; }
+            set { _isRequiredOnDelete = value; }
         }
         #endregion
 
         #region Constructors
-        protected AEntityField (string name, string serializedName, bool isRequiredOnCreate, bool isAllowedOnCreate, bool isRequiredOnUpdate, bool isAllowedOnUpdate, bool isRequiredOnDelete)
+        public BaseEntityField()
         {
-            BelongsTo = typeof (T);
+            //no implementation
+        } 
+
+        public BaseEntityField (string name, string serializedName, bool isRequiredOnCreate, bool isAllowedOnCreate, bool isRequiredOnUpdate, bool isAllowedOnUpdate, bool isRequiredOnDelete)
+        {
             Name = name;
             SerializedName = serializedName;
             IsRequiredOnCreate = isRequiredOnCreate;

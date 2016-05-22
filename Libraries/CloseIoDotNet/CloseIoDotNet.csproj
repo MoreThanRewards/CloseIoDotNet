@@ -53,8 +53,16 @@
     <Compile Include="Entities\Definitions\Lead.cs" />
     <Compile Include="Entities\Definitions\Opportunities\Opportunity.cs" />
     <Compile Include="Entities\Definitions\Tasks\Task.cs" />
-    <Compile Include="Entities\Fields\AEntityField.cs" />
+    <Compile Include="Entities\Fields\Addresses\AddressEntityFieldAttribute.cs" />
+    <Compile Include="Entities\Fields\BaseEntityField.cs" />
+    <Compile Include="Entities\Fields\Contacts\ContactEntityFieldAttribute.cs" />
+    <Compile Include="Entities\Fields\Contacts\Emails\EmailEntityFieldAttribute.cs" />
+    <Compile Include="Entities\Fields\Contacts\Phones\PhoneEntityFieldAttribute.cs" />
+    <Compile Include="Entities\Fields\Contacts\Urls\UrlEntityFieldAttribute.cs" />
     <Compile Include="Entities\Fields\IEntityField.cs" />
+    <Compile Include="Entities\Fields\LeadEntityFieldAttribute.cs" />
+    <Compile Include="Entities\Fields\Opportunities\OpportunityEntityFieldAttribute.cs" />
+    <Compile Include="Entities\Fields\Tasks\TaskEntityFieldAttribute.cs" />
     <Compile Include="ICloseIoDotNetContext.cs" />
     <Compile Include="Ioc\Factory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
