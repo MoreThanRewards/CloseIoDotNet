@@ -4,7 +4,7 @@
     using Entities.Definitions;
     using Newtonsoft.Json;
 
-    public class EnumerableResponse<T> where T : IEntity
+    public class ScanResponse<T> where T : IEntity
     {
         #region Instance Variables
         private IEnumerable<T> _data;

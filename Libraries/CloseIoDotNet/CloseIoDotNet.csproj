@@ -73,7 +73,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rest\ClientFactories\IRestClientFactory.cs" />
     <Compile Include="Rest\ClientFactories\RestClientFactory.cs" />
-    <Compile Include="Rest\MetaEntities\EnumerableResponse.cs" />
+    <Compile Include="Rest\MetaEntities\ScanResponse.cs" />
     <Compile Include="Rest\MetaEntities\ErrorResponse.cs" />
     <Compile Include="Rest\MetaEntities\StatusResponse.cs" />
     <Compile Include="Rest\RequestFactories\IRestRequestFactory.cs" />
