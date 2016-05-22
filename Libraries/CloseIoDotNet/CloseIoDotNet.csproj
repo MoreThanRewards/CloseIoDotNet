@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\Definitions\Addresses\Address.cs" />
+    <Compile Include="Entities\Definitions\AEntity.cs" />
     <Compile Include="Entities\Definitions\Contacts\Contact.cs" />
     <Compile Include="Entities\Definitions\Contacts\Emails\Email.cs" />
     <Compile Include="Entities\Definitions\Contacts\Phones\Phone.cs" />
