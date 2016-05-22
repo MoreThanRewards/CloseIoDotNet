@@ -53,6 +53,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Entities\Fields\BaseEntityFieldTest.cs" />
+    <Compile Include="Entities\Fields\LeadEntityFieldAttributeTest.cs" />
     <Compile Include="Ioc\FactoryTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
