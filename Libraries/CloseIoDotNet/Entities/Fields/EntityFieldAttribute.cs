@@ -1,9 +1,10 @@
 ﻿namespace CloseIoDotNet.Entities.Fields
 {
     using System;
+    using System.Diagnostics;
     using Definitions;
 
-    public class BaseEntityField<T> : IEntityField<T> where T : IEntity
+    public class EntityFieldAttribute : Attribute, IEntityField 
     {
         #region Constants
         private const string InvalidOperationMessageFormat = "{0} not initialized";
@@ -20,7 +21,8 @@
         #endregion
 
         #region Properties - Interface
-        public Type BelongsTo => typeof(T);
+
+        public Type BelongsTo { get; set; }
 
         public string Name
         {
@@ -116,13 +118,14 @@
         #endregion
 
         #region Constructors
-        public BaseEntityField()
+        public EntityFieldAttribute()
         {
             //no implementation
         } 
 
-        public BaseEntityField (string name, string serializedName, bool isRequiredOnCreate, bool isAllowedOnCreate, bool isRequiredOnUpdate, bool isAllowedOnUpdate, bool isRequiredOnDelete)
+        public EntityFieldAttribute (Type belongsTo, string name, string serializedName, bool isRequiredOnCreate, bool isAllowedOnCreate, bool isRequiredOnUpdate, bool isAllowedOnUpdate, bool isRequiredOnDelete)
         {
+            BelongsTo = belongsTo;
             Name = name;
             SerializedName = serializedName;
             IsRequiredOnCreate = isRequiredOnCreate;

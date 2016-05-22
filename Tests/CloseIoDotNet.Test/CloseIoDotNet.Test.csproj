@@ -69,7 +69,7 @@
     <Compile Include="CloseIoDotNetContextTest.cs" />
     <Compile Include="Entities\Definitions\LeadTest.cs" />
     <Compile Include="Entities\Fields\BaseEntityFieldTest.cs" />
-    <Compile Include="Entities\Fields\LeadEntityFieldAttributeTest.cs" />
+    <Compile Include="Entities\Fields\EntityFieldAttributeTest.cs" />
     <Compile Include="Ioc\FactoryTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rest\ClientFactories\RestClientFactoryTest.cs" />

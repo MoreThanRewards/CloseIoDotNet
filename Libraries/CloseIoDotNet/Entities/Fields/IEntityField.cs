@@ -3,7 +3,7 @@
     using System;
     using Definitions;
 
-    public interface IEntityField<T> where T : IEntity
+    public interface IEntityField
     {
         /// <summary>
         /// The IEntity class which contains this field.

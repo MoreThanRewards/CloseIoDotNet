@@ -9,26 +9,26 @@
     public abstract class AEntity<T> : IEntity where T : IEntity, new()
     {
         #region Instance Variables
-        private IEnumerable<IEntityField<T>> _entityFields;
+        private IEnumerable<IEntityField> _entityFields;
         #endregion
 
         #region Properties
-        public IEnumerable<IEntityField<T>> EntityFields => _entityFields ?? (_entityFields = GenerateEntityFieldEnumerable());
+        public IEnumerable<IEntityField> EntityFields => _entityFields ?? (_entityFields = GenerateEntityFieldEnumerable());
         #endregion
 
         #region Methods
-        private static IEnumerable<IEntityField<T>> GenerateEntityFieldEnumerable()
+        private static IEnumerable<IEntityField> GenerateEntityFieldEnumerable()
         {
-            var result = new List<IEntityField<T>>();
+            var result = new List<IEntityField>();
 
             var properties = typeof (T).GetProperties()
                 .SelectMany(property => property.GetCustomAttributes(true))
-                .Where(attribute => attribute.GetType().GetInterfaces().Contains(typeof(IEntityField<T>)))
+                .Where(attribute => attribute.GetType().GetInterfaces().Contains(typeof(IEntityField)))
                 .ToList();
 
             properties.ForEach(
                 entry => {
-                    result.Add((IEntityField<T>) entry);
+                    result.Add((IEntityField) entry);
             });
 
             return result;

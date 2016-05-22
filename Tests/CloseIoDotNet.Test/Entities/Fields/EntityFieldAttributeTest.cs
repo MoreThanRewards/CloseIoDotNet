@@ -6,12 +6,12 @@ namespace CloseIoDotNet.Test.Entities.Fields
     using CloseIoDotNet.Entities.Fields;
 
     [TestClass]
-    public class LeadEntityFieldAttributeTest
+    public class EntityFieldAttributeTest
     {
         [TestMethod]
         public void TestConstruction()
         {
-            var unit = new LeadEntityFieldAttribute("ut", "ut", true, true, true, true, true);
+            var unit = new EntityFieldAttribute(typeof(Lead), "ut", "ut", true, true, true, true, true);
             Assert.AreEqual(typeof (Lead), unit.BelongsTo);
             Assert.AreEqual("ut", unit.Name);
             Assert.AreEqual("ut", unit.SerializedName);
@@ -21,7 +21,7 @@ namespace CloseIoDotNet.Test.Entities.Fields
             Assert.IsTrue(unit.IsAllowedOnCreate);
             Assert.IsTrue(unit.IsAllowedOnUpdate);
 
-            var unit2 = new LeadEntityFieldAttribute("ut2", "ut2", false, false, false, false, false);
+            var unit2 = new EntityFieldAttribute(typeof(Lead), "ut2", "ut2", false, false, false, false, false);
             Assert.AreEqual(typeof (Lead), unit2.BelongsTo);
             Assert.AreEqual("ut2", unit2.Name);
             Assert.AreEqual("ut2", unit2.SerializedName);

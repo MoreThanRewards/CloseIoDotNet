@@ -15,5 +15,13 @@
             var result = unit.EntityFields;
             Assert.AreEqual(1, result.Count(entry => entry.Name.Equals("Id")));
         }
+
+        [TestMethod]
+        public void TestScannableFields()
+        {
+            var unit = new Lead();
+            var result = unit.ScannableFields;
+            Assert.IsNotNull(result);
+        }
     }
 }

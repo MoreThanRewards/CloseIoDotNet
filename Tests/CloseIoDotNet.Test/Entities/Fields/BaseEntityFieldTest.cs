@@ -1,6 +1,7 @@
 ﻿namespace CloseIoDotNet.Test.Entities.Fields
 {
     using System;
+    using System.Linq;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using CloseIoDotNet.Entities.Definitions;
     using CloseIoDotNet.Entities.Definitions.Opportunities;
@@ -12,11 +13,8 @@
         [TestMethod]
         public void TestBelongsToIsTypeT()
         {
-            var unitLead = new BaseEntityField<Lead>();
-            Assert.AreEqual(typeof(Lead), unitLead.BelongsTo);
-
-            var unitOpportunity = new BaseEntityField<Opportunity>();
-            Assert.AreEqual(typeof(Opportunity), unitOpportunity.BelongsTo);
+            var lead = new Lead();
+            Assert.AreEqual(typeof(Lead), lead.EntityFields.First().BelongsTo);
         }
 
         [TestMethod]
@@ -24,7 +22,7 @@
         {
             try
             {
-                var unit = new BaseEntityField<Lead>()
+                var unit = new EntityFieldAttribute()
                 {
                     SerializedName = "unit test",
                     IsRequiredOnCreate = false,
@@ -41,7 +39,7 @@
                 //expected
             }
 
-            var unitPass = new BaseEntityField<Lead>()
+            var unitPass = new EntityFieldAttribute()
             {
                 Name = "unit test",
                 SerializedName = "unit test",
@@ -59,7 +57,7 @@
         {
             try
             {
-                var unit = new BaseEntityField<Lead>()
+                var unit = new EntityFieldAttribute()
                 {
                     Name = "unit test",
                     IsRequiredOnCreate = false,
@@ -76,7 +74,7 @@
                 //expected
             }
 
-            var unitPass = new BaseEntityField<Lead>()
+            var unitPass = new EntityFieldAttribute()
             {
                 Name = "unit test",
                 SerializedName = "unit test",
@@ -94,7 +92,7 @@
         {
             try
             {
-                var unit = new BaseEntityField<Lead>()
+                var unit = new EntityFieldAttribute()
                 {
                     Name = "unit test",
                     SerializedName = "unit test",
@@ -112,7 +110,7 @@
                 //expected
             }
 
-            var unitPass = new BaseEntityField<Lead>()
+            var unitPass = new EntityFieldAttribute()
             {
                 Name = "unit test",
                 SerializedName = "unit test",
@@ -130,7 +128,7 @@
         {
             try
             {
-                var unit = new BaseEntityField<Lead>()
+                var unit = new EntityFieldAttribute()
                 {
                     Name = "unit test",
                     SerializedName = "unit test",
@@ -148,7 +146,7 @@
                 //expected
             }
 
-            var unitPass = new BaseEntityField<Lead>()
+            var unitPass = new EntityFieldAttribute()
             {
                 Name = "unit test",
                 SerializedName = "unit test",
@@ -166,7 +164,7 @@
         {
             try
             {
-                var unit = new BaseEntityField<Lead>()
+                var unit = new EntityFieldAttribute()
                 {
                     Name = "unit test",
                     SerializedName = "unit test",
@@ -184,7 +182,7 @@
                 //expected
             }
 
-            var unitPass = new BaseEntityField<Lead>()
+            var unitPass = new EntityFieldAttribute()
             {
                 Name = "unit test",
                 SerializedName = "unit test",
@@ -202,7 +200,7 @@
         {
             try
             {
-                var unit = new BaseEntityField<Lead>()
+                var unit = new EntityFieldAttribute()
                 {
                     Name = "unit test",
                     SerializedName = "unit test",
@@ -220,7 +218,7 @@
                 //expected
             }
 
-            var unitPass = new BaseEntityField<Lead>()
+            var unitPass = new EntityFieldAttribute()
             {
                 Name = "unit test",
                 SerializedName = "unit test",
@@ -238,7 +236,7 @@
         {
             try
             {
-                var unit = new BaseEntityField<Lead>()
+                var unit = new EntityFieldAttribute()
                 {
                     Name = "unit test",
                     SerializedName = "unit test",
@@ -256,7 +254,7 @@
                 //expected
             }
 
-            var unitPass = new BaseEntityField<Lead>()
+            var unitPass = new EntityFieldAttribute()
             {
                 Name = "unit test",
                 SerializedName = "unit test",
