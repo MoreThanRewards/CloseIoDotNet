@@ -1,4 +1,4 @@
-﻿namespace CloseIoDotNet.Rest.MetaEntities
+﻿namespace CloseIoDotNet.Rest.Entities.Responses
 {
     using Newtonsoft.Json;
 

@@ -9,7 +9,7 @@
     using Rest.ClientFactories;
     using Rest.Entities;
     using Rest.Entities.Requests;
-    using Rest.MetaEntities;
+    using Rest.Entities.ResponseEnumerables;
     using Rest.RequestFactories;
     using RestSharp;
 

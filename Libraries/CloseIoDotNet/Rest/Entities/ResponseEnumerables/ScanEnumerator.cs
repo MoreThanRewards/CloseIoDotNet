@@ -1,15 +1,13 @@
-﻿namespace CloseIoDotNet.Rest.Entities
+﻿namespace CloseIoDotNet.Rest.Entities.ResponseEnumerables
 {
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using ClientFactories;
     using CloseIoDotNet.Entities.Definitions;
-    using Ioc;
-    using MetaEntities;
-    using RequestFactories;
+    using Requests;
+    using Responses;
 
-    public class ScanEnumerator<T> : IEnumerator<T> where T : IEntity, IEntityScannable, new()
+    public class ScanEnumerator<T> : IEnumerator<T> where T : IEntityScannable, new()
     {
         #region Constants
         private const int Limit = 100;
@@ -136,6 +134,9 @@
         public void Reset()
         {
             Index = DefaultIndex;
+            Skip = DefaultSkip;
+            Data.Clear();
+            CurrentEntry = default(T);
         }
 
         public T Current

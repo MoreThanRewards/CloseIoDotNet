@@ -1,10 +1,10 @@
-﻿namespace CloseIoDotNet.Rest.Entities
+﻿namespace CloseIoDotNet.Rest.Entities.ResponseEnumerables
 {
     using System;
     using System.Collections;
     using System.Collections.Generic;
     using CloseIoDotNet.Entities.Definitions;
-    using MetaEntities;
+    using Requests;
 
     public class ScanEnumerable<T> : IScanEnumerable<T> where T : IEntity, IEntityScannable, new()
     {

@@ -5,7 +5,7 @@
     using RequestFactories;
     using RestSharp;
 
-    public interface IQueryRequest<T> : IEntityRequest where T : IEntityQueryable, new()
+    public interface IQueryRequest<T> where T : IEntityQueryable, new()
     {
         string Id { get; set; }
         IRestRequest CreateRestRequest(IRestRequestFactory restRequestFactory);

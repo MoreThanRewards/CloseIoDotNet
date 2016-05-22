@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using Entities.Definitions;
-    using Rest.MetaEntities;
 
     public interface ICloseIoDotNetContext : IDisposable
     {

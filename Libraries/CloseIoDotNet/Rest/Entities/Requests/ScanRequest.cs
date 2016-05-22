@@ -1,12 +1,11 @@
-﻿namespace CloseIoDotNet.Rest.MetaEntities
+﻿namespace CloseIoDotNet.Rest.Entities.Requests
 {
     using System;
-    using System.Configuration;
     using System.Net;
-    using ClientFactories;
     using CloseIoDotNet.Entities.Definitions;
     using Ioc;
     using RequestFactories;
+    using Responses;
     using RestSharp;
 
     public class ScanRequest<T> where T : IEntity, IEntityScannable, new()

@@ -12,7 +12,6 @@ namespace CloseIoDotNet.Test
     using CloseIoDotNet.Entities.Definitions.Opportunities;
     using CloseIoDotNet.Entities.Definitions.Tasks;
     using CloseIoDotNet.Ioc;
-    using CloseIoDotNet.Rest.MetaEntities;
 
     [TestClass]
     public class CloseIoDotNetContextTest
