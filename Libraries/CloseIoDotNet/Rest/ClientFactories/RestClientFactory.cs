@@ -30,10 +30,8 @@
                 throw new ArgumentException("apiKey is required and cannot be null or empty.", nameof(apiKey));
             }
 
-            var result = new RestClient(BaseUrl)
-            {
-                Authenticator = new HttpBasicAuthenticator(apiKey, string.Empty),
-            };
+            var result = Factory.Create<IRestClient, RestClient>(BaseUrl);
+            result.Authenticator = new HttpBasicAuthenticator(apiKey, string.Empty);
 
             result.AddHandler("application/json", JsonDeserializer);
             result.AddHandler("text/json", JsonDeserializer);

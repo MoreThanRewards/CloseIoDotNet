@@ -8,13 +8,14 @@
     using Phones;
     using Urls;
 
-    public class Contact : AEntity<Contact>
+    public class Contact : AEntity<Contact>, IEntityQueryable
     {
         #region Instance Variables
         private IEnumerable<Email> _emails;
         private IEnumerable<dynamic> _integrationLinks;
         private IEnumerable<Phone> _phones;
         private IEnumerable<Url> _urls;
+        private BaseEntityQueryable _baseEntityQueryable;
         #endregion
 
         #region Properties
@@ -23,8 +24,8 @@
         public string Id { get; set; }
 
 
-        [ContactEntityField(name: "CreatedBy", serializedName: "created_by_name", isRequiredOnCreate: false, isAllowedOnCreate: false, isRequiredOnUpdate: false, isAllowedOnUpdate: false, isRequiredOnDelete: false)]
-        [JsonProperty(PropertyName = "created_by_name", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [ContactEntityField(name: "CreatedBy", serializedName: "created_by", isRequiredOnCreate: false, isAllowedOnCreate: false, isRequiredOnUpdate: false, isAllowedOnUpdate: false, isRequiredOnDelete: false)]
+        [JsonProperty(PropertyName = "created_by", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string CreatedBy { get; set; }
 
         [ContactEntityField(name: "Emails", serializedName: "emails", isRequiredOnCreate: false, isAllowedOnCreate: true, isRequiredOnUpdate: false, isAllowedOnUpdate: true, isRequiredOnDelete: false)]
@@ -81,6 +82,20 @@
         {
             get { return _urls ?? (_urls = new List<Url>()); }
             set { _urls = value; }
+        }
+
+        [JsonIgnore]
+        private BaseEntityQueryable BaseEntityQueryable
+            => (_baseEntityQueryable ?? (_baseEntityQueryable = new BaseEntityQueryable()
+            {
+                QueryResourceFormat = $"/contact/{BaseEntityQueryable.QueryResourceIdKey}/"
+            }));
+        #endregion
+
+        #region Methods - Interface
+        public string GenerateQueryResource(string id)
+        {
+            return BaseEntityQueryable.GenerateQueryResource(id);
         }
         #endregion
     }

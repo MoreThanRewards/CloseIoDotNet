@@ -6,7 +6,7 @@
     using System.Reflection;
     using Fields;
 
-    public abstract class AEntity<T> : IEntity where T : IEntity
+    public abstract class AEntity<T> : IEntity where T : IEntity, new()
     {
         #region Instance Variables
         private IEnumerable<IEntityField<T>> _entityFields;

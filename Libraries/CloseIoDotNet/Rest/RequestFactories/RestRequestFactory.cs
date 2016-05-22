@@ -25,11 +25,9 @@
                 throw new ArgumentNullException(nameof(resourceUri));
             }
 
-            var result = new RestRequest(resourceUri, method)
-            {
-                JsonSerializer = JsonSerializer,
-                RequestFormat = DataFormat.Json
-            };
+            var result = Factory.Create<IRestRequest, RestRequest>(resourceUri, method);
+            result.JsonSerializer = JsonSerializer;
+            result.RequestFormat = DataFormat.Json;
 
             return result;
         }

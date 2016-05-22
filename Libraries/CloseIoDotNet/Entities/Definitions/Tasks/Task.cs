@@ -4,8 +4,12 @@
     using Fields.Tasks;
     using Newtonsoft.Json;
 
-    public class Task : AEntity<Task>
+    public class Task : AEntity<Task>, IEntityQueryable
     {
+        #region Instance Variables
+        private BaseEntityQueryable _baseEntityQueryable;
+        #endregion
+
         #region Properties
         [TaskEntityField(name: "Id", serializedName: "id", isRequiredOnCreate: false, isAllowedOnCreate: false, isRequiredOnUpdate: true, isAllowedOnUpdate: true, isRequiredOnDelete: true)]
         [JsonProperty(PropertyName = "id", DefaultValueHandling = DefaultValueHandling.Ignore)]
@@ -99,6 +103,20 @@
         [TaskEntityField(name: "View", serializedName: "view", isRequiredOnCreate: false, isAllowedOnCreate: true, isRequiredOnUpdate: false, isAllowedOnUpdate: true, isRequiredOnDelete: false)]
         [JsonProperty(PropertyName = "view", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string View { get; set; }
+
+        [JsonIgnore]
+        private BaseEntityQueryable BaseEntityQueryable
+            => (_baseEntityQueryable ?? (_baseEntityQueryable = new BaseEntityQueryable()
+            {
+                QueryResourceFormat = $"/task/{BaseEntityQueryable.QueryResourceIdKey}/"
+            }));
+        #endregion
+
+        #region Methods - Interface
+        public string GenerateQueryResource(string id)
+        {
+            return BaseEntityQueryable.GenerateQueryResource(id);
+        }
         #endregion
     }
 }

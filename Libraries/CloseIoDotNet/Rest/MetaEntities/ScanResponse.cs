@@ -1,7 +1,7 @@
 ﻿namespace CloseIoDotNet.Rest.MetaEntities
 {
     using System.Collections.Generic;
-    using Entities.Definitions;
+    using CloseIoDotNet.Entities.Definitions;
     using Newtonsoft.Json;
 
     public class ScanResponse<T> where T : IEntity

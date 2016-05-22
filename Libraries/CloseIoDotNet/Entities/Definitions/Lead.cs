@@ -9,7 +9,7 @@
     using Opportunities;
     using Tasks;
 
-    public class Lead : AEntity<Lead>
+    public class Lead : AEntity<Lead>, IEntityQueryable
     {
         #region Instance Variables
         private IEnumerable<Address> _addresses;
@@ -18,6 +18,7 @@
         private IEnumerable<dynamic> _integrationLinks;
         private IEnumerable<Opportunity> _opportunities;
         private IEnumerable<Task> _tasks;
+        private BaseEntityQueryable _baseEntityQueryable;
         #endregion
 
         #region Properties
@@ -128,6 +129,20 @@
         [LeadEntityField(name: "Description", serializedName: "description", isRequiredOnCreate: false, isAllowedOnCreate: true, isRequiredOnUpdate: false, isAllowedOnUpdate: true, isRequiredOnDelete: false)]
         [JsonProperty(PropertyName = "description", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string Description { get; set; }
+
+        [JsonIgnore]
+        private BaseEntityQueryable BaseEntityQueryable
+            => (_baseEntityQueryable ?? (_baseEntityQueryable = new BaseEntityQueryable()
+            {
+                QueryResourceFormat = $"/lead/{BaseEntityQueryable.QueryResourceIdKey}/"
+            }));
+        #endregion
+
+        #region Methods - Interface
+        public string GenerateQueryResource(string id)
+        {
+            return BaseEntityQueryable.GenerateQueryResource(id);
+        }
         #endregion
     }
 }
