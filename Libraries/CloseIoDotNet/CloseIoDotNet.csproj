@@ -67,6 +67,9 @@
     <Compile Include="ICloseIoDotNetContext.cs" />
     <Compile Include="Ioc\Factory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rest\MetaEntities\EnumerableResponse.cs" />
+    <Compile Include="Rest\MetaEntities\ErrorResponse.cs" />
+    <Compile Include="Rest\MetaEntities\StatusResponse.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
