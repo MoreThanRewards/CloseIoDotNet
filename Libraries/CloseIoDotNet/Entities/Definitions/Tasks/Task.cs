@@ -4,8 +4,12 @@
     using Fields.Tasks;
     using Newtonsoft.Json;
 
-    public class Task : AEntity<Task>, IEntityQueryable
+    public class Task : AEntity<Task>, IEntityQueryable, IEntityScannable
     {
+        #region Constants
+        private const string ScanResource = "task/";
+        #endregion
+
         #region Instance Variables
         private BaseEntityQueryable _baseEntityQueryable;
         #endregion
@@ -116,6 +120,11 @@
         public string GenerateQueryResource(string id)
         {
             return BaseEntityQueryable.GenerateQueryResource(id);
+        }
+
+        public string GenerateScanResource()
+        {
+            return ScanResource;
         }
         #endregion
     }

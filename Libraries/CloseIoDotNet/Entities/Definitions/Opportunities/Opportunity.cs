@@ -5,13 +5,15 @@
     using Fields.Opportunities;
     using Newtonsoft.Json;
 
-    public class Opportunity : AEntity<Opportunity>, IEntityQueryable
+    public class Opportunity : AEntity<Opportunity>, IEntityQueryable, IEntityScannable
     {
-        #region Instance Variables
+        #region Constants
+        private const string ScanResource = "opportunity/";
+        #endregion
 
+        #region Instance Variables
         private IEnumerable<dynamic> _integrationLinks;
         private BaseEntityQueryable _baseEntityQueryable;
-
         #endregion
 
         #region Properties
@@ -166,6 +168,10 @@
             return BaseEntityQueryable.GenerateQueryResource(id);
         }
 
+        public string GenerateScanResource()
+        {
+            return ScanResource;
+        }
         #endregion
     }
 }

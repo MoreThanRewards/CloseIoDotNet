@@ -12,6 +12,7 @@ namespace CloseIoDotNet.Test
     using CloseIoDotNet.Entities.Definitions.Opportunities;
     using CloseIoDotNet.Entities.Definitions.Tasks;
     using CloseIoDotNet.Ioc;
+    using CloseIoDotNet.Rest.MetaEntities;
 
     [TestClass]
     public class CloseIoDotNetContextTest
@@ -23,12 +24,16 @@ namespace CloseIoDotNet.Test
         private static string QueryTestOpportunityId
             => ConfigurationManager.AppSettings["CloseIoQueryTestOpportunityId"];
         private static string QueryTestTaskId => ConfigurationManager.AppSettings["CloseIoQueryTestTaskId"];
-
+        private static string ScanTestLeadId => ConfigurationManager.AppSettings["CloseIoScanTestLeadId"];
+        private static string ScanTestContactId => ConfigurationManager.AppSettings["CloseIoScanTestContactId"];
+        private static string ScanTestOpportunityId
+            => ConfigurationManager.AppSettings["CloseIoScanTestOpportunityId"];
+        private static string ScanTestTaskId => ConfigurationManager.AppSettings["CloseIoScanTestTaskId"];
         #endregion
 
-        #region Tests
+        #region Query
         [TestMethod]
-        public void TestIntegrationLead()
+        public void TestIntegrationQueryLead()
         {
             var inputLeadId = QueryTestLeadId;
             var inputApiKey = ApiKey;
@@ -150,7 +155,7 @@ namespace CloseIoDotNet.Test
         }
 
         [TestMethod]
-        public void TestIntegrationContact()
+        public void TestIntegrationQueryContact()
         {
             var inputContactId = QueryTestContactId;
             var inputApiKey = ApiKey;
@@ -183,7 +188,7 @@ namespace CloseIoDotNet.Test
         }
 
         [TestMethod]
-        public void TestIntegrationOpportunity()
+        public void TestIntegrationQueryOpportunity()
         {
             var inputOpportunityId = QueryTestOpportunityId;
             var inputApiKey = ApiKey;
@@ -222,7 +227,7 @@ namespace CloseIoDotNet.Test
         }
 
         [TestMethod]
-        public void TestIntegrationTasks()
+        public void TestIntegrationQueryTasks()
         {
             var inputTaskId = QueryTestTaskId;
             var inputApiKey = ApiKey;
@@ -254,6 +259,57 @@ namespace CloseIoDotNet.Test
                 Assert.AreEqual(new DateTime(2016,5,22,18,12,43,DateTimeKind.Utc).AddMilliseconds(570).ToUniversalTime(), result.DateCreated.Value.ToUniversalTime());
                 Assert.AreEqual(false, result.IsComplete);
                 Assert.AreEqual("inbox", result.View);
+            }
+        }
+        #endregion
+
+        #region Scan
+        [TestMethod]
+        public void TestIntegrationLeadScan()
+        {
+            var inputApiKey = ApiKey;
+            using (var unit = Factory.Create<ICloseIoDotNetContext, CloseIoDotNetContext>(inputApiKey))
+            {
+                var result = unit.Scan<Lead>();
+                Assert.AreEqual(14745, result.Count());
+                Assert.IsNotNull(result.Single(entry => string.Equals(ScanTestLeadId, entry.Id)));
+            }
+        }
+
+        [TestMethod]
+        public void TestIntegrationContactScan()
+        {
+            var inputApiKey = ApiKey;
+            using (var unit = Factory.Create<ICloseIoDotNetContext, CloseIoDotNetContext>(inputApiKey))
+            {
+                var result = unit.Scan<Contact>();
+                Assert.IsTrue(result.Count() > 100);
+                Assert.IsNotNull(result.Single(entry => string.Equals(ScanTestContactId, entry.Id)));
+            }
+        }
+
+        [TestMethod]
+        public void TestIntegrationOpportunityScan()
+        {
+            var inputApiKey = ApiKey;
+            using (var unit = Factory.Create<ICloseIoDotNetContext, CloseIoDotNetContext>(inputApiKey))
+            {
+                var result = unit.Scan<Opportunity>();
+                Assert.AreEqual(406, result.Count());
+                Assert.IsNotNull(result.Single(entry => string.Equals(ScanTestOpportunityId, entry.Id)));
+            }
+        }
+
+        [TestMethod]
+        public void TestIntegrationTaskScan()
+        {
+            var inputApiKey = ApiKey;
+            using (var unit = Factory.Create<ICloseIoDotNetContext, CloseIoDotNetContext>(inputApiKey))
+            {
+                var result = unit.Scan<Task>();
+                Assert.AreEqual(1, result.Count());
+                Assert.IsNotNull(result.Single(entry => string.Equals(ScanTestTaskId, entry.Id)));
+                ;
             }
         }
         #endregion

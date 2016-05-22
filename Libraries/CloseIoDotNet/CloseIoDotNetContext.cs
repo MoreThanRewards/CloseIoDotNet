@@ -1,11 +1,15 @@
 ﻿namespace CloseIoDotNet
 {
     using System;
+    using System.Collections.Generic;
     using System.Net;
     using Entities.Definitions;
+    using Entities.Fields;
     using Ioc;
     using Rest.ClientFactories;
+    using Rest.Entities;
     using Rest.Entities.Requests;
+    using Rest.MetaEntities;
     using Rest.RequestFactories;
     using RestSharp;
 
@@ -74,6 +78,18 @@
 
             return result;
         }
+
+        public IEnumerable<T> Scan<T>() where T : IEntityScannable, new()
+        {
+            var scanRequest = new ScanRequest<T>()
+            {
+                RestClient = RestClient,
+                RestRequestFactory = RestRequestFactory
+            };
+
+            var result = new ScanEnumerable<T>(scanRequest);
+            return result;
+        }
         #endregion
 
         #region Methods
@@ -84,6 +100,7 @@
             return result;
         }
 
+        //TODO put response validation in its own class
         private static void ValidateResponse(IRestRequest request, IRestResponse response)
         {
             if (request == null)
@@ -122,6 +139,7 @@
             var result = restResponse.Data;
             return result;
         }
+
         #endregion
     }
 }

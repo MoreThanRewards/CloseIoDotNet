@@ -9,8 +9,12 @@
     using Opportunities;
     using Tasks;
 
-    public class Lead : AEntity<Lead>, IEntityQueryable
+    public class Lead : AEntity<Lead>, IEntityQueryable, IEntityScannable
     {
+        #region Constants
+        private const string ScanResource = "lead/";
+        #endregion
+
         #region Instance Variables
         private IEnumerable<Address> _addresses;
         private IEnumerable<Contact> _contacts;
@@ -142,6 +146,11 @@
         public string GenerateQueryResource(string id)
         {
             return BaseEntityQueryable.GenerateQueryResource(id);
+        }
+
+        public string GenerateScanResource()
+        {
+            return ScanResource;
         }
         #endregion
     }

@@ -1,6 +1,7 @@
 ﻿namespace CloseIoDotNet.Rest.Entities.Requests
 {
     using System;
+    using System.Net;
     using ClientFactories;
     using CloseIoDotNet.Entities.Definitions;
     using RequestFactories;
@@ -35,7 +36,6 @@
             }
 
             var result = restRequestFactory.Create((new T()).GenerateQueryResource(id), Method.GET);
-
             return result;
         }
         #endregion

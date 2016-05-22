@@ -8,8 +8,12 @@
     using Phones;
     using Urls;
 
-    public class Contact : AEntity<Contact>, IEntityQueryable
+    public class Contact : AEntity<Contact>, IEntityQueryable, IEntityScannable
     {
+        #region Constants
+        private const string ScanResource = "contact/";
+        #endregion
+
         #region Instance Variables
         private IEnumerable<Email> _emails;
         private IEnumerable<dynamic> _integrationLinks;
@@ -96,6 +100,11 @@
         public string GenerateQueryResource(string id)
         {
             return BaseEntityQueryable.GenerateQueryResource(id);
+        }
+
+        public string GenerateScanResource()
+        {
+            return ScanResource;
         }
         #endregion
     }

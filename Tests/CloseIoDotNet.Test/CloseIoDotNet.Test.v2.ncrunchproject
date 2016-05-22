@@ -17,10 +17,54 @@
   <DetectStackOverflow>true</DetectStackOverflow>
   <IncludeStaticReferencesInWorkspace>true</IncludeStaticReferencesInWorkspace>
   <DefaultTestTimeout>60000</DefaultTestTimeout>
-  <UseBuildConfiguration />
-  <UseBuildPlatform />
-  <ProxyProcessPath />
+  <UseBuildConfiguration></UseBuildConfiguration>
+  <UseBuildPlatform></UseBuildPlatform>
+  <ProxyProcessPath></ProxyProcessPath>
   <UseCPUArchitecture>AutoDetect</UseCPUArchitecture>
   <MSTestThreadApartmentState>STA</MSTestThreadApartmentState>
   <BuildProcessArchitecture>x86</BuildProcessArchitecture>
+  <IgnoredTests>
+    <NamedTestSelector>
+      <TestName>CloseIoDotNet.Test.CloseIoDotNetContextTest.TestIntegrationLead</TestName>
+    </NamedTestSelector>
+    <NamedTestSelector>
+      <TestName>CloseIoDotNet.Test.CloseIoDotNetContextTest.TestIntegrationContact</TestName>
+    </NamedTestSelector>
+    <NamedTestSelector>
+      <TestName>CloseIoDotNet.Test.CloseIoDotNetContextTest.TestIntegrationOpportunity</TestName>
+    </NamedTestSelector>
+    <NamedTestSelector>
+      <TestName>CloseIoDotNet.Test.CloseIoDotNetContextTest.TestIntegrationTasks</TestName>
+    </NamedTestSelector>
+    <NamedTestSelector>
+      <TestName>CloseIoDotNet.Test.CloseIoDotNetContextTest.TestLeadScan</TestName>
+    </NamedTestSelector>
+    <NamedTestSelector>
+      <TestName>CloseIoDotNet.Test.CloseIoDotNetContextTest.TestContactScan</TestName>
+    </NamedTestSelector>
+    <NamedTestSelector>
+      <TestName>CloseIoDotNet.Test.CloseIoDotNetContextTest.TestIntegrationOpportunityScan</TestName>
+    </NamedTestSelector>
+    <NamedTestSelector>
+      <TestName>CloseIoDotNet.Test.CloseIoDotNetContextTest.TestIntegrationContactScan</TestName>
+    </NamedTestSelector>
+    <NamedTestSelector>
+      <TestName>CloseIoDotNet.Test.CloseIoDotNetContextTest.TestIntegrationLeadScan</TestName>
+    </NamedTestSelector>
+    <NamedTestSelector>
+      <TestName>CloseIoDotNet.Test.CloseIoDotNetContextTest.TestIntegrationQueryLead</TestName>
+    </NamedTestSelector>
+    <NamedTestSelector>
+      <TestName>CloseIoDotNet.Test.CloseIoDotNetContextTest.TestIntegrationQueryContact</TestName>
+    </NamedTestSelector>
+    <NamedTestSelector>
+      <TestName>CloseIoDotNet.Test.CloseIoDotNetContextTest.TestIntegrationQueryOpportunity</TestName>
+    </NamedTestSelector>
+    <NamedTestSelector>
+      <TestName>CloseIoDotNet.Test.CloseIoDotNetContextTest.TestIntegrationQueryTasks</TestName>
+    </NamedTestSelector>
+    <NamedTestSelector>
+      <TestName>CloseIoDotNet.Test.CloseIoDotNetContextTest.TestIntegrationTaskScan</TestName>
+    </NamedTestSelector>
+  </IgnoredTests>
 </ProjectConfiguration>
