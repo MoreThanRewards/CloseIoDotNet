@@ -1,8 +1,7 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-namespace CloseIoDotNet.Test.Rest.ClientFactories
+﻿namespace CloseIoDotNet.Test.Rest.ClientFactories
 {
+    using System;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using CloseIoDotNet.Rest.ClientFactories;
     using RestSharp.Authenticators;
 

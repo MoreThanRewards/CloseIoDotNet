@@ -1,8 +1,6 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-namespace CloseIoDotNet.Test.Rest.ResponseEnumerables
+﻿namespace CloseIoDotNet.Test.Rest.ResponseEnumerables
 {
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using System.Collections.Generic;
     using System.Linq;
     using System.Net;
