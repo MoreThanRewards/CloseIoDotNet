@@ -1,8 +1,7 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
+﻿
 namespace CloseIoDotNet.Test.Entities.Fields
 {
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using CloseIoDotNet.Entities.Definitions;
     using CloseIoDotNet.Entities.Fields;
 

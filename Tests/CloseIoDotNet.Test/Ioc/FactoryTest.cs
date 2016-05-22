@@ -1,6 +1,5 @@
 ﻿namespace CloseIoDotNet.Test.Ioc
 {
-    using System;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     using CloseIoDotNet.Ioc;

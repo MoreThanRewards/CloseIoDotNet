@@ -1,10 +1,9 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-namespace CloseIoDotNet.Test.Entities.Definitions
+﻿namespace CloseIoDotNet.Test.Entities.Definitions
 {
     using System.Linq;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using CloseIoDotNet.Entities.Definitions;
+
 
     [TestClass]
     public class LeadTest
