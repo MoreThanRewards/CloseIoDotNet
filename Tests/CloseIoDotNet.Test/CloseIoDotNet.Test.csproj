@@ -73,8 +73,9 @@
     <Compile Include="Ioc\FactoryTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rest\ClientFactories\RestClientFactoryTest.cs" />
+    <Compile Include="Rest\Entities\Requests\ScanRequestTest.cs" />
+    <Compile Include="Rest\Entities\ResponseEnumerables\ScanEnumeratorTest.cs" />
     <Compile Include="Rest\RequestFactories\RestRequestFactoryTest.cs" />
-    <Compile Include="Rest\ResponseEnumerables\ScanEnumeratorTest.cs" />
     <Compile Include="Rest\Serialization\NewtonsoftDeserializerTest.cs" />
     <Compile Include="Rest\Serialization\NewtonsoftSerializerTest.cs" />
   </ItemGroup>

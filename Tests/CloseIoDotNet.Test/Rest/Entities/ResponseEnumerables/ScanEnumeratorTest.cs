@@ -1,6 +1,5 @@
-﻿namespace CloseIoDotNet.Test.Rest.ResponseEnumerables
+﻿namespace CloseIoDotNet.Test.Rest.Entities.ResponseEnumerables
 {
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using System.Collections.Generic;
     using System.Linq;
     using System.Net;
@@ -10,6 +9,7 @@
     using CloseIoDotNet.Rest.Entities.ResponseEnumerables;
     using CloseIoDotNet.Rest.Entities.Responses;
     using FakeItEasy;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using RestSharp;
 
     [TestClass]

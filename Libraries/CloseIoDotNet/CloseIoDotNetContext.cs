@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Net;
     using Entities.Definitions;
     using Entities.Fields;
@@ -90,6 +91,33 @@
             var result = new ScanEnumerable<T>(scanRequest);
             return result;
         }
+
+        public IEnumerable<T> Scan<T>(IEnumerable<IEntityField> fields) where T : IEntityScannable, new()
+        {
+            if (fields == null)
+            {
+                throw new ArgumentNullException(nameof(fields));
+            }
+
+            if (fields.Any() == false)
+            {
+                throw new ArgumentException("fields must contain at least one field to retrieve", nameof(fields));
+            }
+
+            if (fields.Any(entry => entry.BelongsTo != typeof (T)))
+            {
+                throw new ArgumentException("All fields must be a member of the entity being scanned.", nameof(fields));
+            }
+
+            var scanRequest = new ScanRequest<T>()
+            {
+                RestClient = RestClient,
+                RestRequestFactory = RestRequestFactory
+            };
+
+            var result = new ScanEnumerable<T>(scanRequest);
+            return result;
+        }
         #endregion
 
         #region Methods
@@ -139,7 +167,6 @@
             var result = restResponse.Data;
             return result;
         }
-
         #endregion
     }
 }

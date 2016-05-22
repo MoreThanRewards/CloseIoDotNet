@@ -1,8 +1,12 @@
 ﻿namespace CloseIoDotNet.Rest.Entities.Requests
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Net;
+    using System.Text;
     using CloseIoDotNet.Entities.Definitions;
+    using CloseIoDotNet.Entities.Fields;
     using Ioc;
     using RequestFactories;
     using Responses;
@@ -13,6 +17,7 @@
         #region Constants
         private const string QueryKeySkip = "_skip";
         private const string QueryKeyLimit = "_limit";
+        private const string QueryKeyFields = "_fields";
         #endregion
 
         #region Instance Variables
@@ -42,6 +47,7 @@
             }
             set { _restRequestFactory = value; }
         }
+        public IEnumerable<IEntityField> Fields { get; set; }
         #endregion
 
         #region Constructors
@@ -68,6 +74,11 @@
             var request = RestRequestFactory.Create((new T().GenerateScanResource()), Method.GET);
             request.AddQueryParameter(QueryKeySkip, skip.ToString("F0"));
             request.AddQueryParameter(QueryKeyLimit, limit.ToString("F0"));
+            if (Fields != null && Fields.Any() == true)
+            {
+                var fieldParamValue = GenerateFieldsValue(Fields);
+                request.AddQueryParameter(QueryKeyFields, fieldParamValue);
+            }
 
             return request;
         }
@@ -107,6 +118,28 @@
                 //TODO inspect response type and body, issue specific exceptions
                 throw new InvalidOperationException();
             }
+        }
+
+        private static string GenerateFieldsValue(IEnumerable<IEntityField> fields)
+        {
+            if (fields == null || fields.Any() == false)
+            {
+                return string.Empty;
+            }
+
+            var stringBuilder = new StringBuilder();
+            foreach (var field in fields)
+            {
+                if (stringBuilder.Length != 0)
+                {
+                    stringBuilder.Append(',');
+                }
+                stringBuilder.Append(field.SerializedName);
+            }
+
+            var result = stringBuilder.ToString();
+
+            return result;
         }
         #endregion
     }
