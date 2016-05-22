@@ -118,6 +118,8 @@
                 else
                 {
                     var nextPage = LoadNextPage();
+                    Data.Clear();
+                    Index = DefaultIndex;
                     Data.AddRange(nextPage.Data);
                     HasMore = nextPage.HasMore;
                     return MoveNext();
