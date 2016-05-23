@@ -6,6 +6,6 @@
 
     public interface IScanEnumerable<T> : IEnumerable<T> where T : IEntityScannable, new()
     {
-         ScanRequest<T> ScanRequest { get; set; }
+         IScanRequest<T> ScanRequest { get; set; }
     }
 }

@@ -11,7 +11,7 @@
     using Responses;
     using RestSharp;
 
-    public class ScanRequest<T> where T : IEntity, IEntityScannable, new()
+    public class ScanRequest<T> : IScanRequest<T> where T : IEntity, IEntityScannable, new()
     {
         #region Constants
         private const string QueryKeySkip = "_skip";
@@ -24,7 +24,7 @@
         private IRestRequestFactory _restRequestFactory;
         #endregion
 
-        #region Properties
+        #region Properties - Interface
         public IRestClient RestClient
         {
             get
@@ -47,6 +47,9 @@
             set { _restRequestFactory = value; }
         }
         public IEnumerable<IEntityField> Fields { get; set; }
+        #endregion
+
+        #region Properties
         private static IFieldsParameterValueFactory FieldParameterValueFactory
             => Factory.Create<IFieldsParameterValueFactory, FieldsParameterValueFactory>();
         private static IRestResponseValidator RestResponseValidator
@@ -67,7 +70,7 @@
         }
         #endregion
 
-        #region Methods
+        #region Methods - Interface
         public IRestRequest CreateBaseRestRequest(int skip, int limit)
         {
             if (limit <= 0)
@@ -86,7 +89,7 @@
             return request;
         }
 
-        public ScanResponse<T> ExecuteScanRestRequest(IRestRequest request)
+        public IScanResponse<T> ExecuteScanRestRequest(IRestRequest request)
         {
             if (request == null)
             {
@@ -97,7 +100,9 @@
             RestResponseValidator.Validate(request, response);
             return response.Data;
         }
+        #endregion
 
+        #region Methods
         private static string GenerateFieldsValue(IEnumerable<IEntityField> fields)
         {
             return FieldParameterValueFactory.Create(fields);

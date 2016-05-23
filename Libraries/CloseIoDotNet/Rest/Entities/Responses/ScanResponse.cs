@@ -4,13 +4,13 @@
     using CloseIoDotNet.Entities.Definitions;
     using Newtonsoft.Json;
 
-    public class ScanResponse<T> where T : IEntity
+    public class ScanResponse<T> : IScanResponse<T> where T : IEntity, IEntityScannable, new()
     {
         #region Instance Variables
         private IEnumerable<T> _data;
         #endregion
 
-        #region Properties
+        #region Properties - Interface
         [JsonProperty(PropertyName = "has_more", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public bool HasMore { get; set; }
 

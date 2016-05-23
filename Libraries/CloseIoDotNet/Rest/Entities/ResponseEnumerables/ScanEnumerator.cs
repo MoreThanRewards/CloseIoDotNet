@@ -21,7 +21,7 @@
         private int? _skip;
         private bool? _hasMore;
         private T _currentEntry;
-        private ScanRequest<T> _scanRequest;
+        private IScanRequest<T> _scanRequest;
         #endregion
 
         #region Properties
@@ -71,7 +71,7 @@
             get { return _hasMore ?? (_hasMore = true).Value; }
             set { _hasMore = value; }
         }
-        public ScanRequest<T> ScanRequest
+        public IScanRequest<T> ScanRequest
         {
             get
             {
@@ -88,7 +88,7 @@
         #region Constructors
         public ScanEnumerator() { }
 
-        public ScanEnumerator(ScanRequest<T> scanRequest)
+        public ScanEnumerator(IScanRequest<T> scanRequest)
         {
             ScanRequest = scanRequest;
         } 
@@ -163,7 +163,7 @@
             return (Skip += Limit);
         }
 
-        private ScanResponse<T> LoadNextPage()
+        private IScanResponse<T> LoadNextPage()
         {
             var skip = IterateSkip();
             var limit = Limit;

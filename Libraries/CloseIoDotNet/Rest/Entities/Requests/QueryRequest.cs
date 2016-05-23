@@ -42,7 +42,7 @@
                 throw new ArgumentNullException(nameof(restRequestFactory));
             }
 
-            var result = CreateRestRequest(restRequestFactory, Id);
+            var result = CreateRestRequest(restRequestFactory, Id, Fields);
 
             return result;
         }
@@ -54,19 +54,6 @@
             if (string.IsNullOrEmpty(id))
             {
                 throw new ArgumentException("id is required and cannot be null or empty.");
-            }
-            if (fields == null)
-            {
-                throw new ArgumentNullException(nameof(fields));
-            }
-            if (fields.Any() == false)
-            {
-                throw new ArgumentException("fields must contain at least one field to retrieve", nameof(fields));
-            }
-
-            if (fields.Any(entry => entry.BelongsTo != typeof (T)))
-            {
-                throw new ArgumentException("All fields must be a member of the entity being scanned.", nameof(fields));
             }
 
             var result = restRequestFactory.Create((new T()).GenerateQueryResource(id), Method.GET);
