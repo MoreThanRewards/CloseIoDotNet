@@ -12,6 +12,7 @@
     {
         #region Properties - Interface
         public IEnumerable<IEntityField> Fields { get; set; }
+        public string SearchQuery { get; set; }
         #endregion
 
         #region Constructors
@@ -34,6 +35,10 @@
             {
                 var fieldParamValue = FieldParameterValueFactory.Create(Fields);
                 request.AddQueryParameter(QueryKeyFields, fieldParamValue);
+            }
+            if (string.IsNullOrWhiteSpace(SearchQuery) == false)
+            {
+                request.AddQueryParameter(QueryKeySearchQuery, SearchQuery);
             }
 
             return request;

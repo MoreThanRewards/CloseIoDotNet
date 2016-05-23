@@ -11,6 +11,7 @@ namespace CloseIoDotNet.Test
     using CloseIoDotNet.Entities.Definitions.Contacts;
     using CloseIoDotNet.Entities.Definitions.Opportunities;
     using CloseIoDotNet.Entities.Definitions.Tasks;
+    using CloseIoDotNet.Entities.Fields;
     using CloseIoDotNet.Ioc;
 
     [TestClass]
@@ -309,6 +310,28 @@ namespace CloseIoDotNet.Test
                 Assert.AreEqual(1, result.Count());
                 Assert.IsNotNull(result.Single(entry => string.Equals(ScanTestTaskId, entry.Id)));
                 ;
+            }
+        }
+
+        [TestMethod]
+        public void TestIntegrationLeadScanWithFieldsAndQuery()
+        {
+            var inputApiKey = ApiKey;
+            var inputSearchQuery = "email_address:jim@jones.com";
+            var inputFields = new List<IEntityField>
+            {
+                (new Lead()).EntityFields.First(entry => entry.SerializedName.Equals("id")),
+                (new Lead()).EntityFields.First(entry => entry.SerializedName.Equals("contacts"))
+            };
+            using (var unit = Factory.Create<ICloseIoDotNetContext, CloseIoDotNetContext>(inputApiKey))
+            {
+                var result = unit.Scan<Lead>(inputSearchQuery, inputFields);
+                Assert.IsNotNull(result);
+                Assert.AreEqual(1, result.Count());
+                Assert.AreEqual(ScanTestLeadId, result.First().Id);
+                Assert.AreEqual(ScanTestContactId, result.First().Contacts.First().Id);
+                Assert.IsFalse(result.First().Addresses.Any());
+                Assert.IsFalse(result.First().Opportunities.Any());
             }
         }
         #endregion

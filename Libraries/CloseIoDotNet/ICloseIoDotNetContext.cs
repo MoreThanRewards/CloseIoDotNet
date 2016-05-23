@@ -16,6 +16,8 @@
         T Query<T>(string id) where T : IEntityQueryable, new();
         T Query<T>(string id, IEnumerable<IEntityField> fields) where T : IEntityQueryable, new();
         IEnumerable<T> Scan<T>() where T : IEntityScannable, new();
+        IEnumerable<T> Scan<T>(string searchQuery) where T : IEntityScannable, new();
+        IEnumerable<T> Scan<T>(string searchQuery, IEnumerable<IEntityField> fields) where T : IEntityScannable, new();
         IEnumerable<T> Scan<T>(IEnumerable<IEntityField> fields) where T : IEntityScannable, new();
         #endregion
     }

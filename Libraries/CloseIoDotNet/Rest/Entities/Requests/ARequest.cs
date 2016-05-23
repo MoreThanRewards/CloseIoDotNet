@@ -14,7 +14,7 @@
         protected const string QueryKeySkip = "_skip";
         protected const string QueryKeyLimit = "_limit";
         protected const string QueryKeyFields = "_fields";
-        protected const string QueryKeyQuery = "_query";
+        protected const string QueryKeySearchQuery = "query";
         #endregion
 
         #region Instance Variables

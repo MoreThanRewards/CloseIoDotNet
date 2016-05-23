@@ -98,6 +98,53 @@
             return result;
         }
 
+        public IEnumerable<T> Scan<T>(string searchQuery) where T : IEntityScannable, new()
+        {
+            if (string.IsNullOrWhiteSpace(searchQuery))
+            {
+                throw new ArgumentException("searchQuery cannot be null, empty, or whitespace.", nameof(searchQuery));
+            }
+
+            var scanRequest = Factory.Create<IScanRequest<T>, ScanRequest<T>>();
+            scanRequest.ApiKey = ApiKey;
+            scanRequest.SearchQuery = searchQuery;
+
+            var result = new ScanEnumerable<T>(scanRequest);
+            return result;
+        }
+
+        public IEnumerable<T> Scan<T>(string searchQuery, IEnumerable<IEntityField> fields)
+            where T : IEntityScannable, new()
+        {
+            if (string.IsNullOrWhiteSpace(searchQuery))
+            {
+                throw new ArgumentException("searchQuery cannot be null, empty, or whitespace.", nameof(searchQuery));
+            }
+
+            if (fields == null)
+            {
+                throw new ArgumentNullException(nameof(fields));
+            }
+
+            if (fields.Any() == false)
+            {
+                throw new ArgumentException("fields must contain at least one field to retrieve", nameof(fields));
+            }
+
+            if (fields.Any(entry => entry.BelongsTo != typeof (T)))
+            {
+                throw new ArgumentException("All fields must be a member of the entity being scanned.", nameof(fields));
+            }
+
+            var scanRequest = Factory.Create<IScanRequest<T>, ScanRequest<T>>();
+            scanRequest.ApiKey = ApiKey;
+            scanRequest.SearchQuery = searchQuery;
+            scanRequest.Fields = fields;
+
+            var result = new ScanEnumerable<T>(scanRequest);
+            return result;
+        }
+
         public IEnumerable<T> Scan<T>(IEnumerable<IEntityField> fields) where T : IEntityScannable, new()
         {
             if (fields == null)

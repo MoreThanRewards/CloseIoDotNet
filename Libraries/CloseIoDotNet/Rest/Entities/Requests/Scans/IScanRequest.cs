@@ -11,6 +11,7 @@
     {
         #region Properties
         IEnumerable<IEntityField> Fields { get; set; }
+        string SearchQuery { get; set; }
         #endregion
 
         #region Methods
