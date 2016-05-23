@@ -19,7 +19,10 @@ MIT. See LICENSE.txt.
 
 # Status
 
-First release (0.1) under active development.
+First beta release (0.1) complete - reading from all lead-based endpoints
+implemented.
+
+Second beta release (0.2) under active development.
 
 # Roadmap
 
