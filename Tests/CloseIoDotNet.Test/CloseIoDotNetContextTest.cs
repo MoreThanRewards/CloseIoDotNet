@@ -335,5 +335,20 @@ namespace CloseIoDotNet.Test
             }
         }
         #endregion
+
+        #region README examples
+
+        [TestMethod]
+        public void TestIntegrationReadmeScanWithQueryExample()
+        {
+            using (var context = new CloseIoDotNetContext(ApiKey))
+            {
+                var fieldsToSearch = (new Lead()).EntityFields.Where(entry => entry.SerializedName.Equals("contacts"));
+                var searchQuery = "phone_number:414-326-4100";
+                var result = context.Scan<Lead>(searchQuery, fieldsToSearch).SelectMany(entry => entry.Contacts).Select(entry => entry.Name);
+                Assert.IsTrue(result.Contains("Brandon Sigesmund"));
+            }
+        }
+        #endregion
     }
 }
