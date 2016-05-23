@@ -3,10 +3,9 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Net;
-    using System.Text;
     using CloseIoDotNet.Entities.Definitions;
     using CloseIoDotNet.Entities.Fields;
+    using CloseIoDotNet.Rest.Utilities;
     using Ioc;
     using RequestFactories;
     using Responses;
@@ -48,6 +47,10 @@
             set { _restRequestFactory = value; }
         }
         public IEnumerable<IEntityField> Fields { get; set; }
+        private static IFieldsParameterValueFactory FieldParameterValueFactory
+            => Factory.Create<IFieldsParameterValueFactory, FieldsParameterValueFactory>();
+        private static IRestResponseValidator RestResponseValidator
+            => Factory.Create<IRestResponseValidator, RestResponseValidator>();
         #endregion
 
         #region Constructors
@@ -91,55 +94,13 @@
             }
 
             var response = RestClient.Execute<ScanResponse<T>>(request);
-            ValidateResponse(request, response);
+            RestResponseValidator.Validate(request, response);
             return response.Data;
-        }
-
-        private static void ValidateResponse(IRestRequest request, IRestResponse response)
-        {
-            if (request == null)
-            {
-                throw new ArgumentNullException(nameof(request));
-            }
-
-            if (response == null)
-            {
-                throw new ArgumentNullException(nameof(response));
-            }
-
-            if (
-                response.StatusCode != HttpStatusCode.OK &&
-                response.StatusCode != HttpStatusCode.NoContent &&
-                response.StatusCode != HttpStatusCode.Created &&
-                response.StatusCode != HttpStatusCode.Accepted &&
-                response.StatusCode != HttpStatusCode.PartialContent
-                )
-            {
-                //TODO inspect response type and body, issue specific exceptions
-                throw new InvalidOperationException();
-            }
         }
 
         private static string GenerateFieldsValue(IEnumerable<IEntityField> fields)
         {
-            if (fields == null || fields.Any() == false)
-            {
-                return string.Empty;
-            }
-
-            var stringBuilder = new StringBuilder();
-            foreach (var field in fields)
-            {
-                if (stringBuilder.Length != 0)
-                {
-                    stringBuilder.Append(',');
-                }
-                stringBuilder.Append(field.SerializedName);
-            }
-
-            var result = stringBuilder.ToString();
-
-            return result;
+            return FieldParameterValueFactory.Create(fields);
         }
         #endregion
     }

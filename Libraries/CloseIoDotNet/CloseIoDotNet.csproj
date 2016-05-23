@@ -82,6 +82,10 @@
     <Compile Include="Rest\RequestFactories\RestRequestFactory.cs" />
     <Compile Include="Rest\Serialization\NewtonsoftDeserializer.cs" />
     <Compile Include="Rest\Serialization\NewtonsoftSerializer.cs" />
+    <Compile Include="Rest\Utilities\FieldsParameterValueFactory.cs" />
+    <Compile Include="Rest\Utilities\IFieldsParameterValueFactory.cs" />
+    <Compile Include="Rest\Utilities\IRestResponseValidator.cs" />
+    <Compile Include="Rest\Utilities\RestResponseValidator.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

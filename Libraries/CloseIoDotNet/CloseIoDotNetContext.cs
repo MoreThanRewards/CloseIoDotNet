@@ -4,11 +4,11 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Net;
+    using CloseIoDotNet.Rest.Utilities;
     using Entities.Definitions;
     using Entities.Fields;
     using Ioc;
     using Rest.ClientFactories;
-    using Rest.Entities;
     using Rest.Entities.Requests;
     using Rest.Entities.ResponseEnumerables;
     using Rest.RequestFactories;
@@ -34,7 +34,6 @@
             }
             set { _restClient = value; }
         }
-
         private IRestRequestFactory RestRequestFactory
         {
             get
@@ -44,6 +43,8 @@
             }
             set { _restRequestFactory = value; }
         }
+        private static IRestResponseValidator RestResponseValidator
+            => Factory.Create<IRestResponseValidator, RestResponseValidator>();
         #endregion
 
         #region Constructors
@@ -78,6 +79,31 @@
             var result = Query<T>(request);
 
             return result;
+        }
+
+        public T Query<T>(string id,IEnumerable<IEntityField> fields) where T : IEntityQueryable, new()
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                throw new ArgumentException("id is required and cannot be null or empty.");
+            }
+
+            if (fields.Any() == false)
+            {
+                throw new ArgumentException("fields must contain at least one field to retrieve", nameof(fields));
+            }
+
+            if (fields.Any(entry => entry.BelongsTo != typeof (T)))
+            {
+                throw new ArgumentException("All fields must be a member of the entity being scanned.", nameof(fields));
+            }
+
+            var request = Factory.Create<IQueryRequest<T>, QueryRequest<T>>();
+            request.Id = id;
+            request.Fields = fields;
+            var result = Query<T>(request);
+            return result;
+
         }
 
         public IEnumerable<T> Scan<T>() where T : IEntityScannable, new()
@@ -128,32 +154,6 @@
             return result;
         }
 
-        //TODO put response validation in its own class
-        private static void ValidateResponse(IRestRequest request, IRestResponse response)
-        {
-            if (request == null)
-            {
-                throw new ArgumentNullException(nameof(request));
-            }
-
-            if (response == null)
-            {
-                throw new ArgumentNullException(nameof(response));
-            }
-
-            if (
-                response.StatusCode != HttpStatusCode.OK &&
-                response.StatusCode != HttpStatusCode.NoContent &&
-                response.StatusCode != HttpStatusCode.Created &&
-                response.StatusCode != HttpStatusCode.Accepted &&
-                response.StatusCode != HttpStatusCode.PartialContent
-                )
-            {
-                //TODO inspect response type and body, issue specific exceptions
-                throw new InvalidOperationException();
-            }
-        }
-
         private T Query<T>(IQueryRequest<T> request) where T : IEntityQueryable, new()
         {
             if (request == null)
@@ -163,7 +163,7 @@
 
             var restRequest = request.CreateRestRequest(RestRequestFactory);
             var restResponse = RestClient.Execute<T>(restRequest);
-            ValidateResponse(restRequest, restResponse);
+            RestResponseValidator.Validate(restRequest, restResponse);
             var result = restResponse.Data;
             return result;
         }
