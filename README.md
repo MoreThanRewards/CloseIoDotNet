@@ -8,6 +8,11 @@ A library for interacting with the [Close.io CRM](http://close.io) [API](http://
 
 Maintained by [Tony Lechner](https://github.com/tonymke), tony@morethanrewards.com, Software Engineer at More Than Rewards
 
+# Legal Note
+
+CloseIoDotNet is a third party API abstraction library. More Than Rewards is not 
+affiliated with Elastic, Inc, owners of the Close.Io service and trademark, in any way.
+
 # License
 
 MIT. See LICENSE.txt.
