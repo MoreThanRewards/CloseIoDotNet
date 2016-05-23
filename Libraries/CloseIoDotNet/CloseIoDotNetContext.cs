@@ -3,67 +3,46 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Net;
-    using CloseIoDotNet.Rest.Utilities;
+    using CloseIoDotNet.Rest.Entities.Requests.Queries;
+    using CloseIoDotNet.Rest.Entities.Requests.Scans;
+    using CloseIoDotNet.Rest.Entities.Responses.Enumerables;
     using Entities.Definitions;
     using Entities.Fields;
     using Ioc;
-    using Rest.ClientFactories;
-    using Rest.Entities.Requests;
-    using Rest.Entities.ResponseEnumerables;
-    using Rest.RequestFactories;
-    using RestSharp;
 
     public class CloseIoDotNetContext : ICloseIoDotNetContext
     {
         #region Instance Variables
-        private IRestClient _restClient;
-        private IRestRequestFactory _restRequestFactory;
+        private string _apiKey;
         #endregion
 
         #region Properties
-        private IRestClient RestClient
+        public string ApiKey
         {
-            get
+            private get
             {
-                if (_restClient == null)
+                if (string.IsNullOrEmpty(_apiKey))
                 {
-                    throw new InvalidOperationException("IRestClient not initialized.");
+                    throw new InvalidOperationException("ApiKey not initialized.");
                 }
-                return _restClient;
+                return _apiKey;
             }
-            set { _restClient = value; }
+            set { _apiKey = value; }
         }
-        private IRestRequestFactory RestRequestFactory
-        {
-            get
-            {
-                return _restRequestFactory ??
-                       (_restRequestFactory = Factory.Create<IRestRequestFactory, RestRequestFactory>());
-            }
-            set { _restRequestFactory = value; }
-        }
-        private static IRestResponseValidator RestResponseValidator
-            => Factory.Create<IRestResponseValidator, RestResponseValidator>();
         #endregion
 
         #region Constructors
+        public CloseIoDotNetContext() { }
         public CloseIoDotNetContext(string apiKey)
         {
-            if (string.IsNullOrEmpty(apiKey))
-            {
-                throw new ArgumentException("apiKey is required and cannot be null or empty.", nameof(apiKey));
-            }
-
-            RestClient = CreateIRestClient(apiKey);
+            ApiKey = apiKey;
         }
         #endregion
 
         #region Methods - Interface
         public void Dispose()
         {
-            _restRequestFactory = null;
-            _restClient = null;
+            ApiKey = null;
         }
 
 
@@ -74,14 +53,16 @@
                 throw new ArgumentException("id is required and cannot be null or empty.");
             }
 
-            var request = Factory.Create<IQueryRequest<T>, QueryRequest<T>>();
-            request.Id = id;
-            var result = Query<T>(request);
-
-            return result;
+            using (var request = Factory.Create<IQueryRequest<T>, QueryRequest<T>>())
+            {
+                request.ApiKey = ApiKey;
+                request.Id = id;
+                var result = request.Execute();
+                return result;
+            }
         }
 
-        public T Query<T>(string id,IEnumerable<IEntityField> fields) where T : IEntityQueryable, new()
+        public T Query<T>(string id, IEnumerable<IEntityField> fields) where T : IEntityQueryable, new()
         {
             if (string.IsNullOrEmpty(id))
             {
@@ -98,21 +79,20 @@
                 throw new ArgumentException("All fields must be a member of the entity being scanned.", nameof(fields));
             }
 
-            var request = Factory.Create<IQueryRequest<T>, QueryRequest<T>>();
-            request.Id = id;
-            request.Fields = fields;
-            var result = Query<T>(request);
-            return result;
-
+            using (var request = Factory.Create<IQueryRequest<T>, QueryRequest<T>>())
+            {
+                request.ApiKey = ApiKey;
+                request.Id = id;
+                request.Fields = fields;
+                var result = request.Execute();
+                return result;
+            }
         }
 
         public IEnumerable<T> Scan<T>() where T : IEntityScannable, new()
         {
-            var scanRequest = new ScanRequest<T>()
-            {
-                RestClient = RestClient,
-                RestRequestFactory = RestRequestFactory
-            };
+            var scanRequest = Factory.Create<IScanRequest<T>, ScanRequest<T>>();
+            scanRequest.ApiKey = ApiKey;
 
             var result = new ScanEnumerable<T>(scanRequest);
             return result;
@@ -135,36 +115,11 @@
                 throw new ArgumentException("All fields must be a member of the entity being scanned.", nameof(fields));
             }
 
-            var scanRequest = new ScanRequest<T>()
-            {
-                RestClient = RestClient,
-                RestRequestFactory = RestRequestFactory
-            };
+            var scanRequest = Factory.Create<IScanRequest<T>, ScanRequest<T>>();
+            scanRequest.ApiKey = ApiKey;
+            scanRequest.Fields = fields;
 
             var result = new ScanEnumerable<T>(scanRequest);
-            return result;
-        }
-        #endregion
-
-        #region Methods
-        private static IRestClient CreateIRestClient(string apiKey)
-        {
-            var restClientFactory = Factory.Create<IRestClientFactory, RestClientFactory>();
-            var result = restClientFactory.Create(apiKey);
-            return result;
-        }
-
-        private T Query<T>(IQueryRequest<T> request) where T : IEntityQueryable, new()
-        {
-            if (request == null)
-            {
-                throw new ArgumentNullException(nameof(request));
-            }
-
-            var restRequest = request.CreateRestRequest(RestRequestFactory);
-            var restResponse = RestClient.Execute<T>(restRequest);
-            RestResponseValidator.Validate(restRequest, restResponse);
-            var result = restResponse.Data;
             return result;
         }
         #endregion

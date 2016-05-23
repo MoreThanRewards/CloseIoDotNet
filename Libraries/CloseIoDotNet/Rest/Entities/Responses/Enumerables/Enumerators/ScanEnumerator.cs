@@ -1,13 +1,12 @@
-﻿namespace CloseIoDotNet.Rest.Entities.ResponseEnumerables
+﻿namespace CloseIoDotNet.Rest.Entities.Responses.Enumerables.Enumerators
 {
     using System;
     using System.Collections;
     using System.Collections.Generic;
     using CloseIoDotNet.Entities.Definitions;
-    using Requests;
-    using Responses;
+    using CloseIoDotNet.Rest.Entities.Requests.Scans;
 
-    public class ScanEnumerator<T> : IEnumerator<T> where T : IEntityScannable, new()
+    public class ScanEnumerator<T> : IScanEnumerator<T> where T : IEntityScannable, new()
     {
         #region Constants
         private const int Limit = 100;
@@ -22,6 +21,21 @@
         private bool? _hasMore;
         private T _currentEntry;
         private IScanRequest<T> _scanRequest;
+        #endregion
+
+        #region Properties - Interface
+        public IScanRequest<T> ScanRequest
+        {
+            get
+            {
+                if (_scanRequest == null)
+                {
+                    throw new InvalidOperationException();
+                }
+                return _scanRequest;
+            }
+            set { _scanRequest = value; }
+        }
         #endregion
 
         #region Properties
@@ -71,18 +85,6 @@
             get { return _hasMore ?? (_hasMore = true).Value; }
             set { _hasMore = value; }
         }
-        public IScanRequest<T> ScanRequest
-        {
-            get
-            {
-                if (_scanRequest == null)
-                {
-                    throw new InvalidOperationException();
-                }
-                return _scanRequest;
-            }
-            set { _scanRequest = value; }
-        }
         #endregion
 
         #region Constructors
@@ -109,11 +111,7 @@
         {
             if ((Index + 1) >= Data.Count)
             {
-                if (HasMore == false)
-                {
-                    return false;
-                }
-                else
+                if (HasMore == true)
                 {
                     var nextPage = LoadNextPage();
                     Data.Clear();
@@ -122,6 +120,8 @@
                     HasMore = nextPage.HasMore;
                     return MoveNext();
                 }
+
+                return false;
             }
             else
             {

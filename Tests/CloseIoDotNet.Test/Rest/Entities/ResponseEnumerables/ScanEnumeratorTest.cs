@@ -6,8 +6,9 @@
     using CloseIoDotNet.Entities.Definitions;
     using CloseIoDotNet.Ioc;
     using CloseIoDotNet.Rest.Entities.Requests;
-    using CloseIoDotNet.Rest.Entities.ResponseEnumerables;
+    using CloseIoDotNet.Rest.Entities.Requests.Scans;
     using CloseIoDotNet.Rest.Entities.Responses;
+    using CloseIoDotNet.Rest.Entities.Responses.Enumerables;
     using FakeItEasy;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using RestSharp;
@@ -49,9 +50,7 @@
                 });
             Factory.DispenseForType<IRestClient, RestClient>(mockRestClient);
 
-            var unit = new ScanEnumerable<Lead>(new ScanRequest<Lead>(
-                restClient: Factory.Create<IRestClient, RestClient>("mock API key")
-                ));
+            var unit = new ScanEnumerable<Lead>(new ScanRequest<Lead>("mockApiKey"));
             var results = unit.ToList();
             Assert.IsNotNull(results);
             Assert.AreEqual(0, results.Count);
@@ -86,9 +85,7 @@
                 .Throws(new AssertFailedException("IRestClient.Execute called with unexpected value."));
             Factory.DispenseForType<IRestClient, RestClient>(mockRestClient);
 
-            var unit = new ScanEnumerable<Lead>(new ScanRequest<Lead>(
-                restClient: Factory.Create<IRestClient, RestClient>("mock API key")
-                ));
+            var unit = new ScanEnumerable<Lead>(new ScanRequest<Lead>("mockApiKey"));
             var result = unit.ToList();
             Assert.AreEqual(1, result.Count);
             Assert.AreEqual("1", result[0].Id);
@@ -137,9 +134,7 @@
                 .Throws(new AssertFailedException("IRestClient.Execute called with unexpected value."));
             Factory.DispenseForType<IRestClient, RestClient>(mockRestClient);
 
-            var unit = new ScanEnumerable<Lead>(new ScanRequest<Lead>(
-                restClient: Factory.Create<IRestClient, RestClient>("mock API key")
-                ));
+            var unit = new ScanEnumerable<Lead>(new ScanRequest<Lead>("mockApiKey"));
             var result = unit.ToList();
             Assert.AreEqual(3, result.Count);
             Assert.AreEqual("1", result[0].Id);

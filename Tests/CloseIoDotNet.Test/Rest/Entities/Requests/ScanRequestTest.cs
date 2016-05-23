@@ -10,6 +10,7 @@ namespace CloseIoDotNet.Test.Rest.Entities.Requests
     using CloseIoDotNet.Entities.Fields;
     using CloseIoDotNet.Ioc;
     using CloseIoDotNet.Rest.Entities.Requests;
+    using CloseIoDotNet.Rest.Entities.Requests.Scans;
     using CloseIoDotNet.Rest.Entities.Responses;
     using FakeItEasy;
     using RestSharp;
@@ -59,7 +60,7 @@ namespace CloseIoDotNet.Test.Rest.Entities.Requests
             Factory.DispenseForType<IRestClient, RestClient>(mockRestClient);
 
                 
-            var unit = new ScanRequest<Lead>(mockRestClient)
+            var unit = new ScanRequest<Lead>()
             {
                 Fields = new List<IEntityField>()
                 {

@@ -1,8 +1,8 @@
-﻿namespace CloseIoDotNet.Rest.Entities.ResponseEnumerables
+﻿namespace CloseIoDotNet.Rest.Entities.Responses.Enumerables
 {
     using System.Collections.Generic;
     using CloseIoDotNet.Entities.Definitions;
-    using Requests;
+    using CloseIoDotNet.Rest.Entities.Requests.Scans;
 
     public interface IScanEnumerable<T> : IEnumerable<T> where T : IEntityScannable, new()
     {
