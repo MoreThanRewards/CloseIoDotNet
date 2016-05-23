@@ -30,3 +30,4 @@ First release (0.1) under active development.
 * **0.5** Add full support for line-level custom field updates.
 * **0.6** Add full support for integration link field CRUD
 * **1.0** Fully tested, non-beta release.
+* **1.1** Add query string builder
