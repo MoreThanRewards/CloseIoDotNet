@@ -62,6 +62,7 @@
     <Compile Include="Entities\Definitions\Lead.cs" />
     <Compile Include="Entities\Definitions\Opportunities\Opportunity.cs" />
     <Compile Include="Entities\Definitions\Tasks\Task.cs" />
+    <Compile Include="Entities\Enumerations\ScanType.cs" />
     <Compile Include="Entities\Fields\EntityFieldAttribute.cs" />
     <Compile Include="Entities\Fields\IEntityField.cs" />
     <Compile Include="ICloseIoDotNetContext.cs" />

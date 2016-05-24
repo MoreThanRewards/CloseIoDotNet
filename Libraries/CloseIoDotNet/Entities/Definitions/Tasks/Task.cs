@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using CloseIoDotNet.Entities.Enumerations;
     using Fields;
     using Newtonsoft.Json;
 
@@ -9,6 +10,10 @@
     {
         #region Constants
         private const string ScanResource = "task/";
+        private static readonly IEnumerable<ScanType> ScanTypes = new []
+        {
+            ScanType.Base
+        };
         #endregion
 
         #region Instance Variables
@@ -126,6 +131,9 @@
                 return result;
             }
         }
+
+        [JsonIgnore]
+        public IEnumerable<ScanType> ScanTypesSupported => ScanTypes;
         #endregion
 
         #region Methods - Interface

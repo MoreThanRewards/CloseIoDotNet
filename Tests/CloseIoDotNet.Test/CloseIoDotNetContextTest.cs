@@ -13,10 +13,20 @@ namespace CloseIoDotNet.Test
     using CloseIoDotNet.Entities.Definitions.Tasks;
     using CloseIoDotNet.Entities.Fields;
     using CloseIoDotNet.Ioc;
+    using FakeItEasy;
+    using RestSharp;
 
     [TestClass]
     public class CloseIoDotNetContextTest
     {
+        #region Setup/Teardown
+        [TestCleanup]
+        public void TestCleanup()
+        {
+            Factory.ClearDispenser();
+        }
+        #endregion
+
         #region Propeties
         private static string ApiKey => ConfigurationManager.AppSettings["CloseIoApiKey"];
         private static string QueryTestLeadId => ConfigurationManager.AppSettings["CloseIoQueryTestLeadId"];
@@ -264,6 +274,101 @@ namespace CloseIoDotNet.Test
         #endregion
 
         #region Scan
+        [TestMethod]
+        public void TestScanValidatesScanTypeSupported()
+        {
+            var mockRestClient = A.Fake<IRestClient>();
+            A.CallTo(mockRestClient).DoesNothing();
+            Factory.DispenseForType<IRestClient, RestClient>(mockRestClient);
+
+            //leads support all scan types, so will never throw InvalidOperationException
+            using (var context = Factory.Create<ICloseIoDotNetContext, CloseIoDotNetContext>("mock API key"))
+            {
+                context.Scan<Lead>();
+                context.Scan<Lead>(new Lead().ScannableFields);
+                context.Scan<Lead>("mockQuery");
+                context.Scan<Lead>("mockQuery", new Lead().ScannableFields);
+            }
+
+            //Opportunities support all scan types, so will never throw InvalidOperationException
+            using (var context = Factory.Create<ICloseIoDotNetContext, CloseIoDotNetContext>("mock API key"))
+            {
+                context.Scan<Opportunity>();
+                context.Scan<Opportunity>(new Opportunity().ScannableFields);
+                context.Scan<Opportunity>("mockQuery");
+                context.Scan<Opportunity>("mockQuery", new Opportunity().ScannableFields);
+            }
+
+            //contacts only support base scans. calling anything but the base scan method throws InvalidOperationException
+            using (var context = Factory.Create<ICloseIoDotNetContext, CloseIoDotNetContext>("mock API key"))
+            {
+                context.Scan<Contact>();
+                try
+                {
+                    context.Scan<Contact>(new Contact().EntityFields);
+                    Assert.Fail("Expected InvalidOperationExpected not thrown.");
+                }
+                catch (InvalidOperationException)
+                {
+                    //expected
+                }
+
+                try
+                {
+                    context.Scan<Contact>("mockQuery");
+                    Assert.Fail("Expected InvalidOperationExpected not thrown.");
+                }
+                catch (InvalidOperationException)
+                {
+                    //expected
+                }
+
+                try
+                {
+                    context.Scan<Contact>("mockQuery", new Contact().EntityFields);
+                    Assert.Fail("Expected InvalidOperationExpected not thrown.");
+                }
+                catch (InvalidOperationException)
+                {
+                    //expected
+                }
+            }
+
+            //tasks only support base scans. calling anything but the base scan method throws InvalidOperationException
+            using (var context = Factory.Create<ICloseIoDotNetContext, CloseIoDotNetContext>("mock API key"))
+            {
+                context.Scan<Task>();
+                try
+                {
+                    context.Scan<Task>(new Task().EntityFields);
+                    Assert.Fail("Expected InvalidOperationExpected not thrown.");
+                }
+                catch (InvalidOperationException)
+                {
+                    //expected
+                }
+
+                try
+                {
+                    context.Scan<Task>("mockQuery");
+                    Assert.Fail("Expected InvalidOperationExpected not thrown.");
+                }
+                catch (InvalidOperationException)
+                {
+                    //expected
+                }
+
+                try
+                {
+                    context.Scan<Task>("mockQuery", new Task().EntityFields);
+                    Assert.Fail("Expected InvalidOperationExpected not thrown.");
+                }
+                catch (InvalidOperationException)
+                {
+                    //expected
+                }
+            }
+        }
         [TestMethod]
         public void TestIntegrationLeadScan()
         {

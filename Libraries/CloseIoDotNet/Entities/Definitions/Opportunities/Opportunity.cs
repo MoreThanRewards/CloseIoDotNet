@@ -2,20 +2,20 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using Addresses;
-    using Contacts;
-    using Contacts.Emails;
-    using Contacts.Phones;
-    using Contacts.Urls;
+    using CloseIoDotNet.Entities.Enumerations;
     using Fields;
     using Newtonsoft.Json;
-    using Tasks;
 
     public class Opportunity : AEntity<Opportunity>, IEntityQueryable, IEntityScannable
     {
         #region Constants
         private const string ScanResource = "opportunity/";
+        private static readonly IEnumerable<ScanType> ScanTypes = new []
+        {
+            ScanType.Base,
+            ScanType.Query,
+            ScanType.Fields
+        };
         #endregion
 
         #region Instance Variables
@@ -175,10 +175,12 @@
                 return result;
             }
         }
+
+        [JsonIgnore]
+        public IEnumerable<ScanType> ScanTypesSupported => ScanTypes;
         #endregion
 
         #region Methods - Interface
-
         public string GenerateQueryResource(string id)
         {
             return BaseEntityQueryable.GenerateQueryResource(id);
