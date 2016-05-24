@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using CloseIoDotNet.Entities.Enumerations;
     using Emails;
     using Fields;
     using Newtonsoft.Json;
@@ -13,6 +14,10 @@
     {
         #region Constants
         private const string ScanResource = "contact/";
+        private static readonly IEnumerable<ScanType> ScanTypes = new []
+        {
+            ScanType.Base
+        };
         #endregion
 
         #region Instance Variables
@@ -102,10 +107,12 @@
             get
             {
                 var result = new List<IEntityField>();
-                result.AddRange(EntityFields);
                 return result;
             }
         }
+
+        [JsonIgnore]
+        public IEnumerable<ScanType> ScanTypesSupported => ScanTypes;
         #endregion
 
         #region Methods - Interface

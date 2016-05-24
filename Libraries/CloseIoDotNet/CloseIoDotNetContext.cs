@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using CloseIoDotNet.Entities.Enumerations;
     using CloseIoDotNet.Rest.Entities.Requests.Queries;
     using CloseIoDotNet.Rest.Entities.Requests.Scans;
     using CloseIoDotNet.Rest.Entities.Responses.Enumerables;
@@ -91,6 +92,11 @@
 
         public IEnumerable<T> Scan<T>() where T : IEntityScannable, new()
         {
+            if (ValidateScanTypeSupported<T>(ScanType.Base) == false)
+            {
+                throw new InvalidOperationException($"Entity of type {typeof (T).Name} does not support this type of scan.");
+            }
+
             var scanRequest = Factory.Create<IScanRequest<T>, ScanRequest<T>>();
             scanRequest.ApiKey = ApiKey;
 
@@ -103,6 +109,11 @@
             if (string.IsNullOrWhiteSpace(searchQuery))
             {
                 throw new ArgumentException("searchQuery cannot be null, empty, or whitespace.", nameof(searchQuery));
+            }
+
+            if (ValidateScanTypeSupported<T>(ScanType.Query) == false)
+            {
+                throw new InvalidOperationException($"Entity of type {typeof (T).Name} does not support this type of scan.");
             }
 
             var scanRequest = Factory.Create<IScanRequest<T>, ScanRequest<T>>();
@@ -136,6 +147,11 @@
                 throw new ArgumentException("All fields must be a member of the entity being scanned.", nameof(fields));
             }
 
+            if (ValidateScanTypeSupported<T>(ScanType.Query) == false || ValidateScanTypeSupported<T>(ScanType.Fields) == false)
+            {
+                throw new InvalidOperationException($"Entity of type {typeof (T).Name} does not support this type of scan.");
+            }
+
             var scanRequest = Factory.Create<IScanRequest<T>, ScanRequest<T>>();
             scanRequest.ApiKey = ApiKey;
             scanRequest.SearchQuery = searchQuery;
@@ -162,12 +178,24 @@
                 throw new ArgumentException("All fields must be a member of the entity being scanned.", nameof(fields));
             }
 
+            if (ValidateScanTypeSupported<T>(ScanType.Fields) == false)
+            {
+                throw new InvalidOperationException($"Entity of type {typeof (T).Name} does not support this type of scan.");
+            }
+
             var scanRequest = Factory.Create<IScanRequest<T>, ScanRequest<T>>();
             scanRequest.ApiKey = ApiKey;
             scanRequest.Fields = fields;
 
             var result = new ScanEnumerable<T>(scanRequest);
             return result;
+        }
+        #endregion
+
+        #region Methods
+        private static bool ValidateScanTypeSupported<T>(ScanType scanType) where T : IEntityScannable, new()
+        {
+            return new T().ScanTypesSupported.Contains(scanType);
         }
         #endregion
     }

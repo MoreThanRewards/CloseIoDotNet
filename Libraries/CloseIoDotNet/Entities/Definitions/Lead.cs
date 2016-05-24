@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using Addresses;
+    using CloseIoDotNet.Entities.Enumerations;
     using Contacts;
     using Contacts.Emails;
     using Contacts.Phones;
@@ -16,6 +17,12 @@
     {
         #region Constants
         private const string ScanResource = "lead/";
+        private static readonly IEnumerable<ScanType> ScanTypes = new []
+        {
+            ScanType.Base,
+            ScanType.Fields,
+            ScanType.Query
+        };
         #endregion
 
         #region Instance Variables
@@ -154,6 +161,9 @@
                 return result;
             }
         }
+
+        [JsonIgnore]
+        public IEnumerable<ScanType> ScanTypesSupported => ScanTypes;
         #endregion
 
         #region Methods - Interface
