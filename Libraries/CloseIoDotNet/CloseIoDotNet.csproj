@@ -82,6 +82,8 @@
     <Compile Include="Rest\Entities\Responses\Enumerables\IScanEnumerable.cs" />
     <Compile Include="Rest\Entities\Responses\Enumerables\ScanEnumerable.cs" />
     <Compile Include="Rest\Entities\Responses\ScanResponse.cs" />
+    <Compile Include="Rest\Exceptions\CloseIoRequestException.cs" />
+    <Compile Include="Rest\Exceptions\InternalServerErrorException.cs" />
     <Compile Include="Rest\RequestFactories\IRestRequestFactory.cs" />
     <Compile Include="Rest\RequestFactories\RestRequestFactory.cs" />
     <Compile Include="Rest\Serialization\NewtonsoftDeserializer.cs" />
