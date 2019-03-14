@@ -10,7 +10,7 @@
     public class RestClientFactory : IRestClientFactory
     {
         #region Constants
-        private const string BaseUrl = "https://app.close.io/api/v1/";
+        private const string BaseUrl = "https://api.close.com/api/v1/";
         #endregion
 
         #region Instance Variables
